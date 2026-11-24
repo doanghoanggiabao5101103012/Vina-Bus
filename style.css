@@ -1,11 +1,24 @@
-/* ===== Chế độ ghim: con trỏ chữ thập trên bản đồ ===== */
 #map.dang-ghim,
 #map.dang-ghim .leaflet-grab {
   cursor: crosshair;
 }
-
-/* ===== Nút ghim đang bật ===== */
 .btn-ghim.active {
   background: #dbeafe;
   border-color: #3b82f6;
+}
+
+/* ===== Đóng/mở panel =====
+   Điện thoại (<768px): bottom sheet, đóng = trượt xuống dưới
+   Desktop  (>=768px): panel trái, đóng = trượt sang trái */
+#panel.dong { transform: translateY(100%); }
+@media (min-width: 768px) {
+  #panel.dong { transform: translateX(-100%); }
+}
+
+/* Mũi tên nút đóng/mở: xoay theo hướng trượt (‹ gốc trỏ sang trái) */
+#iconToggle { display: inline-block; transition: transform 0.3s; transform: rotate(-90deg); }   /* điện thoại, đang mở: ˅ */
+#panel.dong #iconToggle { transform: rotate(90deg); }                                           /* điện thoại, đang đóng: ˄ */
+@media (min-width: 768px) {
+  #iconToggle { transform: rotate(0deg); }                                                      /* desktop, đang mở: ‹ */
+  #panel.dong #iconToggle { transform: rotate(180deg); }                                        /* desktop, đang đóng: › */
 }

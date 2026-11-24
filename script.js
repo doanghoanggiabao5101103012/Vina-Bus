@@ -20,7 +20,7 @@ const state = {
 //================= 3. THAM CHIẾU DOM =================
 const $ = id => document.getElementById(id);
 const el = {
-  panel: $("panel"), btnToggle: $("btnToggle"), iconToggle: $("iconToggle"),
+  panel: $("panel"), btnToggle: $("btnToggle"),
   btnSwap: $("btnSwap"), btnTim: $("btnTim"), thongBao: $("thongBao"),
   input: { dau: $("input-dau"), cuoi: $("input-cuoi") },
   ghim:  { dau: $("ghim-dau"),  cuoi: $("ghim-cuoi") },
@@ -29,7 +29,8 @@ const el = {
 
 //================= 4. BẢN ĐỒ =================
 const map = L.map("map", { zoomControl: false }).setView(CFG.tamBanDo, CFG.zoom);
-L.control.zoom({ position: "bottomright" }).addTo(map);
+L.control.zoom({ position: "topright" }).addTo(map);   // tránh bị bottom sheet che trên điện thoại
+const laDienThoai = window.matchMedia("(max-width: 767px)");   // khớp breakpoint md của Tailwind
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19, attribution: "© OpenStreetMap contributors",
 }).addTo(map);
@@ -122,10 +123,8 @@ map.on("click", e => {
 
 //================= 9. SỰ KIỆN PANEL =================
 // đóng/mở panel
-el.btnToggle.onclick = () => {
-  const dong = el.panel.classList.toggle("-translate-x-full");
-  el.iconToggle.textContent = dong ? "›" : "‹";
-};
+// hướng trượt + mũi tên do style.css xử lý theo kích thước màn hình
+el.btnToggle.onclick = () => el.panel.classList.toggle("dong");
 
 // ghim + nhập tay
 for (const loai of ["dau", "cuoi"]) {
@@ -147,7 +146,11 @@ el.btnSwap.onclick = () => {
 el.btnTim.onclick = () => {
   const { dau, cuoi } = state.diem;
   if (!dau || !cuoi) { el.thongBao.textContent = "Hãy chọn đủ điểm đầu và điểm cuối."; return; }
-  map.fitBounds(L.latLngBounds([dau.toaDo, cuoi.toaDo]), { maxZoom: 17, padding: [60, 60] });
+  // điện thoại: chừa thêm đáy bằng chiều cao bottom sheet (35%) để 2 điểm không bị che
+  const chuaDay = laDienThoai.matches && !el.panel.classList.contains("dong") ? window.innerHeight * 0.35 : 0;
+  map.fitBounds(L.latLngBounds([dau.toaDo, cuoi.toaDo]), {
+    maxZoom: 17, paddingTopLeft: [60, 60], paddingBottomRight: [60, 60 + chuaDay],
+  });
   timDuong(dau.id, cuoi.id);
 };
 

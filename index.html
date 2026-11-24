@@ -8,7 +8,7 @@
   <!-- Thư viện -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
 
   <!-- CSS riêng -->
   <link rel="stylesheet" href="style.css">
@@ -20,18 +20,20 @@
 
   <!-- ===== VÙNG 2: PANEL TRÁI ===== -->
   <aside id="panel"
-         class="absolute left-0 top-0 z-[1000] h-full w-[20%] min-w-[300px] bg-white shadow-xl
-                transition-transform duration-300">
+         class="absolute bottom-0 left-0 z-[1000] h-[35%] w-full bg-white shadow-xl transition-transform duration-300
+                md:top-0 md:h-full md:w-[20%] md:min-w-[300px]">
 
     <!-- Nút đóng/mở: góc phải trên của panel -->
     <button id="btnToggle" type="button" title="Đóng/mở panel"
-            class="absolute left-full top-3 flex h-10 w-8 items-center justify-center rounded-r-lg
-                   bg-white text-slate-600 shadow-md hover:bg-slate-100">
-      <span id="iconToggle">‹</span>
+            class="absolute bottom-full right-3 flex h-8 w-12 items-center justify-center rounded-t-lg
+                   bg-white text-slate-600 shadow-md hover:bg-slate-100
+                   md:bottom-auto md:left-full md:right-auto md:top-3 md:h-10 md:w-8 md:rounded-l-none md:rounded-r-lg">
+      <span id="iconToggle" class="text-xl leading-none">‹</span>
     </button>
 
-    <div class="flex h-full flex-col gap-4 p-5">
-      <h1 class="text-lg font-bold text-slate-800">Tìm đường xe buýt</h1>
+    <div class="flex h-full flex-col gap-2 overflow-y-auto p-3 md:gap-4 md:p-5">
+      <h1 class="hidden text-lg font-bold text-slate-800 md:block">Tìm đường xe buýt</h1>
+
       <!-- Điểm đầu -->
       <section>
         <label for="input-dau" class="mb-1 block text-sm font-semibold text-slate-700">Điểm đầu</label>
@@ -44,6 +46,7 @@
         </div>
         <p id="hint-dau" class="mt-1 min-h-4 text-xs text-slate-500"></p>
       </section>
+
       <!-- Điểm cuối -->
       <section>
         <label for="input-cuoi" class="mb-1 block text-sm font-semibold text-slate-700">Điểm cuối</label>
@@ -56,6 +59,7 @@
         </div>
         <p id="hint-cuoi" class="mt-1 min-h-4 text-xs text-slate-500"></p>
       </section>
+
       <!-- Hàng nút: Swap 30% / Tìm đường 70% -->
       <div class="grid grid-cols-10 gap-2">
         <button id="btnSwap" type="button" title="Đổi điểm đầu và điểm cuối"
@@ -65,10 +69,12 @@
           Tìm đường
         </button>
       </div>
+
       <!-- Thông báo trạng thái / kết quả -->
       <p id="thongBao" class="text-sm text-slate-600"></p>
     </div>
   </aside>
+
   <!-- JS riêng -->
   <script src="script.js"></script>
 </body>
