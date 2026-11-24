@@ -1,11 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vina Bus</title>
+
+  <!-- Thư viện -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <!-- CSS riêng -->
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    
+<body class="h-screen w-screen overflow-hidden font-sans">
+
+  <!-- ===== VÙNG 1: BẢN ĐỒ (fullscreen) ===== -->
+  <div id="map" class="absolute inset-0 z-0"></div>
+
+  <!-- ===== VÙNG 2: PANEL TRÁI ===== -->
+  <aside id="panel"
+         class="absolute left-0 top-0 z-[1000] h-full w-[20%] min-w-[300px] bg-white shadow-xl
+                transition-transform duration-300">
+
+    <!-- Nút đóng/mở: góc phải trên của panel -->
+    <button id="btnToggle" type="button" title="Đóng/mở panel"
+            class="absolute left-full top-3 flex h-10 w-8 items-center justify-center rounded-r-lg
+                   bg-white text-slate-600 shadow-md hover:bg-slate-100">
+      <span id="iconToggle">‹</span>
+    </button>
+
+    <div class="flex h-full flex-col gap-4 p-5">
+      <h1 class="text-lg font-bold text-slate-800">Tìm đường xe buýt</h1>
+      <!-- Điểm đầu -->
+      <section>
+        <label for="input-dau" class="mb-1 block text-sm font-semibold text-slate-700">Điểm đầu</label>
+        <div class="flex gap-2">
+          <input id="input-dau" type="text" placeholder="vĩ độ, kinh độ"
+                 class="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm
+                        focus:border-blue-500 focus:outline-none">
+          <button id="ghim-dau" type="button" title="Ghim điểm đầu trên bản đồ"
+                  class="btn-ghim rounded-lg border border-slate-300 px-3 text-lg hover:bg-slate-100">📍</button>
+        </div>
+        <p id="hint-dau" class="mt-1 min-h-4 text-xs text-slate-500"></p>
+      </section>
+      <!-- Điểm cuối -->
+      <section>
+        <label for="input-cuoi" class="mb-1 block text-sm font-semibold text-slate-700">Điểm cuối</label>
+        <div class="flex gap-2">
+          <input id="input-cuoi" type="text" placeholder="vĩ độ, kinh độ"
+                 class="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm
+                        focus:border-blue-500 focus:outline-none">
+          <button id="ghim-cuoi" type="button" title="Ghim điểm cuối trên bản đồ"
+                  class="btn-ghim rounded-lg border border-slate-300 px-3 text-lg hover:bg-slate-100">📍</button>
+        </div>
+        <p id="hint-cuoi" class="mt-1 min-h-4 text-xs text-slate-500"></p>
+      </section>
+      <!-- Hàng nút: Swap 30% / Tìm đường 70% -->
+      <div class="grid grid-cols-10 gap-2">
+        <button id="btnSwap" type="button" title="Đổi điểm đầu và điểm cuối"
+                class="col-span-3 rounded-lg border border-slate-300 py-2 text-lg hover:bg-slate-100">⇅</button>
+        <button id="btnTim" type="button"
+                class="col-span-7 rounded-lg bg-blue-600 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+          Tìm đường
+        </button>
+      </div>
+      <!-- Thông báo trạng thái / kết quả -->
+      <p id="thongBao" class="text-sm text-slate-600"></p>
+    </div>
+  </aside>
+  <!-- JS riêng -->
+  <script src="script.js"></script>
 </body>
 </html>

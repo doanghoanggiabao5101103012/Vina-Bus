@@ -1,0 +1,11 @@
+/* ===== Chế độ ghim: con trỏ chữ thập trên bản đồ ===== */
+#map.dang-ghim,
+#map.dang-ghim .leaflet-grab {
+  cursor: crosshair;
+}
+
+/* ===== Nút ghim đang bật ===== */
+.btn-ghim.active {
+  background: #dbeafe;
+  border-color: #3b82f6;
+}
